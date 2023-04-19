@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html"%}
+{% load static %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+<div style="text-align: center;">
+   <h2>Category </h2>
+   {% for c in categories %}
+   
+   <p><a href="{% url 'category_detail' c %}">{{c.capitalize}}</a></p>
+   {% endfor %}
+
+   <a href="{% url 'index' %}">Back to Active Listings</a>
+
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div style="text-align: center;">    
+   <h2>Active Listings</h2>
+
+   {% for listing in listings %}
+    <a href="{% url 'listing' listing.id %}">
+      <p calss="title">{{listing.title}}</p>
+    </a>
+         <p> {{listing.description}} </p>
+         <p>Current Bid 💰{{listing.bid}}</p>
+         <img src="{{listing.image_url}}" style="width: 300px;">
+         <p> {{listing.category}} </p>
+         <p>Created by {{listing.user.username}} </p>
+     
+         {% if user.is_authenticated %}
+            <a href="{% url 'place_bid' listing.id %}"><button type="button">Place your bid</button> </a>
+         {% endif %}
+         <br>
+         <br>
+         <hr> 
+   {% empty %}
+   <br>
+   <br>
+     <h1> Empty Y'all</h1>
+   {% endfor %}
+</div>
+{% endblock %}

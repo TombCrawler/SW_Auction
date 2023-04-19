@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div style="text-align: center;">    
+   <h2>test</h2>
+      
+     {% if closed %}
+
+         <h1>Closed</h1>
+
+         {% else %}
+          <h1>Not closed</h1>
+          
+          {% endif %}
+</div>
+{% endblock %}

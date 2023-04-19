@@ -1,0 +1,80 @@
+{% extends "auctions/layout.html"%}
+{% load static %}
+
+{% block title %}Bid{% endblock %}
+
+{% block body %}
+<div style="text-align: center;">
+        <!-- display the message -->
+   {% for message in messages %}
+   <li class="{{ message.tags }}">
+   {% if 'safe' in message.tags %}
+       {{ message|safe }}
+   {% else %}
+       {{ message }}
+   {% endif %}
+   </li>
+{% endfor %}
+
+{% if listing.closed %}
+<h2>Bid Closed</h2>
+<p> <img src="{{listing.image_url}}"></p>
+<h1 style="color: orange;">{{highest_bidder}} won!</h1>
+<!-- open bid -->
+<form action="{% url 'open_bid' listing.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Open bid</button>
+</form>
+
+{% else %}
+   <h2>Place your Bid</h2>
+   <p>{{listing.title}}</p>
+   <p> <img src="{{listing.image_url}}"></p>
+   <p id="current-bid">   Current Bid 💰 {{listing.bid}} </p>
+        <p>Highest Bidder: {{highest_bidder}} </p>
+        <p>Last Bid Date: {{last_bid_date}} </p>
+   
+       <!-- place a bid -->
+       <form action="{% url 'place_bid' listing.id %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Place Bid</button>
+        </form>
+
+        <!-- close a bid -->
+        <form action="{% url 'close_bid' listing.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Close bid</button>
+        </form>
+     
+        <!-- #add to watchlist -->
+        <form action="{% url 'add_watchlist' listing.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Add to Watchlist">
+        </form>
+
+
+        <!-- Post a comment -->
+        <form action="{% url 'post_comment' listing.id%}" method="post">
+            {% csrf_token %}
+            {{comment_form.as_p}}
+            <button type="submit">Post</button>
+        </form>
+        <br>
+        <h3>Comments</h3>
+        {% for c in comments %}
+           <p>{{c.text}}</p>
+           <p>Posted by {{c.user.username}} on {{c.created_date}}</p>
+           <hr>
+        {% empty %}
+        <p>No comment</p>
+        
+        {% endfor %}
+
+{% endif %}
+
+   <a href="{% url 'index' %}">Back to Active Listings</a>
+
+</div>
+
+{% endblock %}

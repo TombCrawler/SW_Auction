@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html"%}
+{% load static %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+<div style="text-align: center;">
+   <h2>Category Details</h2>
+    <h2>{{category.capitalize}}</h2> 
+     {% if category_listings %}
+        {% for c in category_listings %}
+        <a href="{% url 'place_bid' c.id %}">
+           <p> {{c.title}} </p>
+           <img src="{{c.image_url}}" style="width: 300px;">
+        </a>
+         {% endfor %}
+     {% else %}
+        <img src="/static/auctions/images/tatooine.svg" style="width: 600px; opacity: 0.9;">
+        <h2>No items for this category</h2>
+
+   {% endif %}
+   <br>
+   <p><a href="{% url 'category' %}">Back to Categories</a></p> 
+
+</div>
+{% endblock %}

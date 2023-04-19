@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html"%}
+{% load static %}
+
+{% block title %}Listing{% endblock %}
+
+{% block body %}
+<div style="text-align: center;">
+   <h2>Each Item</h2>
+   <p id="current-bid"> Current Bid 💰{{listing.bid}}</p>
+   <br>
+   <p class="title">{{listing.title}}</p>
+   <p> {{listing.description}}</p>
+   <p> <img src="{{listing.image_url}}"></p>
+   <p> {{listing.category}}</p>
+   <br>
+   <form action="{% url 'add_watchlist' listing.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Add to Watchlist">
+   </form>
+   <a href="{% url 'index' %}">Back to Active Listings</a>
+</div>
+
+{% endblock %}

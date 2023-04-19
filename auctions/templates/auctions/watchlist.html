@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html"%}
+{% load static %}
+
+{% block title %}Watchlist{% endblock %}
+
+{% block body %}
+<div style="text-align: center;">
+   <h2>Your Watchlist</h2>
+   <ur>
+      {% for item in watchlist %}
+      <br>
+      <a href="{% url 'place_bid' item.listing.id %}"> 
+      <p class="title"> {{item.listing.title}} </p>
+      </p> <img src="{{item.listing.image_url}}"></p>
+      </a>
+      <p> <a href="{% url 'remove_watchlist' item.listing.id %}">Remove</a></p>
+      <br>
+      {% empty %}
+      empty yo!
+      {% endfor %}
+   </ur>
+   <br>
+   <a href="{% url 'index' %}">Back to Active Listings</a>
+</div>
+{% endblock %}
